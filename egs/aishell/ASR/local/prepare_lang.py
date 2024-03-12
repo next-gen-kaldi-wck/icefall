@@ -346,8 +346,6 @@ def main():
     assert "<s>" not in words
     assert "</s>" not in words
 
-    words = ["<eps>"] + words + ["#0", "<s>", "</s>"]
-
     token2id = generate_id_map(tokens)
     word2id = generate_id_map(words)
 

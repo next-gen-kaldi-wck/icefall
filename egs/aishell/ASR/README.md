@@ -1,12 +1,10 @@
 
 # Introduction
 
-Please refer to <https://k2-fsa.github.io/icefall/recipes/Non-streaming-ASR/aishell/index.html> for how to run models in this recipe.
+Please refer to <https://icefall.readthedocs.io/en/latest/recipes/Non-streaming-ASR/aishell/index.html>
+for how to run models in this recipe.
 
-Aishell is an open-source Chinese Mandarin speech corpus published by Beijing Shell Shell Technology Co., Ltd.
-400 people from different accent areas in China are invited to participate in the recording, which is conducted in a quiet indoor environment using high fidelity microphone and downsampled to 16kHz. The manual transcription accuracy is above 95%, through professional speech annotation and strict quality inspection. The data is free for academic use. We hope to provide moderate amount of data for new researchers in the field of speech recognition.
 
-(From [Open Speech and Language Resources](https://www.openslr.org/33/))
 
 # Transducers
 
@@ -25,9 +23,3 @@ The decoder in `transducer_stateless` is modified from the paper
 [Rnn-Transducer with Stateless Prediction Network](https://ieeexplore.ieee.org/document/9054419/).
 We place an additional Conv1d layer right after the input embedding layer.
 
-# Whisper
-
-Recipe to finetune large pretrained models
-|                                    | Encoder   | Decoder            | Comment                                                                           |
-|------------------------------------|-----------|--------------------|-----------------------------------------------------------------------------------|
-| `whisper`             | Transformer | Transformer | support fine-tuning using deepspeed

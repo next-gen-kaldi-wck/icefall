@@ -2,6 +2,7 @@
 
 # fix segmentation fault reported in https://github.com/k2-fsa/icefall/issues/674
 export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+export PYTHONPATH=/datas/workspaces/speech/asr/framework/next_gen_kaldi/icefall:$PYTHONPATH
 
 set -eou pipefail
 
@@ -144,13 +145,14 @@ if [ $stage -le 5 ] && [ $stop_stage -ge 5 ]; then
     ./local/prepare_lang.py --lang-dir $lang_phone_dir
   fi
 
-
   # Train a bigram P for MMI training
   if [ ! -f $lang_phone_dir/transcript_words.txt ]; then
     log "Generate data to train phone based bigram P"
     aishell_text=$dl_dir/aishell/data_aishell/transcript/aishell_transcript_v0.8.txt
     aishell_train_uid=$dl_dir/aishell/data_aishell/transcript/aishell_train_uid
+    # 在指定的目录中查找所有的.wav文件，提取它们的文件名（不带扩展名），并将结果保存到指定的输出文件中
     find $dl_dir/aishell/data_aishell/wav/train -name "*.wav" | sed 's/\.wav//g' | awk -F '/' '{print $NF}' > $aishell_train_uid
+    # 从$aishell_text中提取出出现在$aishell_train_uid中的行，去掉每行开头的文件名，并将文本标注保存到指定的输出文件中
     awk 'NR==FNR{uid[$1]=$1} NR!=FNR{if($1 in uid) print $0}' $aishell_train_uid $aishell_text |
 	    cut -d " " -f 2- > $lang_phone_dir/transcript_words.txt
   fi
@@ -190,13 +192,14 @@ if [ $stage -le 6 ] && [ $stop_stage -ge 6 ]; then
   cp $lang_phone_dir/transcript_words.txt $lang_char_dir/transcript_words.txt
 
   cat $dl_dir/aishell/data_aishell/transcript/aishell_transcript_v0.8.txt |
-  cut -d " " -f 2- > $lang_char_dir/text
+    cut -d " " -f 2- > $lang_char_dir/text
 
   (echo '<eps> 0'; echo '!SIL 1'; echo '<SPOKEN_NOISE> 2'; echo '<UNK> 3';) \
     > $lang_char_dir/words.txt
 
+  # sed '/^$/d': 使用sed命令删除空行，即删除文件中的空白行
   cat $lang_char_dir/text | sed 's/ /\n/g' | sort -u | sed '/^$/d' \
-     | awk '{print $1" "NR+3}' >> $lang_char_dir/words.txt
+    | awk '{print $1" "NR+3}' >> $lang_char_dir/words.txt
 
   num_lines=$(< $lang_char_dir/words.txt wc -l)
   (echo "#0 $num_lines"; echo "<s> $(($num_lines + 1))"; echo "</s> $(($num_lines + 2))";) \
