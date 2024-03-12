@@ -115,7 +115,6 @@ def compute_fbank_aishell(
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser = argparse.ArgumentParser()
     parser.add_argument(
         "--num-mel-bins",
         type=int,

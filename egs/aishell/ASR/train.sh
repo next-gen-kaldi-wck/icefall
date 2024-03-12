@@ -13,7 +13,7 @@ stop_stage=1
 
 if [ $stage -le 1 ] && [ $stop_stage -ge 1 ]; then
   log "Stage 1: fine-tuning on Aishell test set on whisper large-v2"
-  torchrun --nproc_per_node 8 ./whisper/train.py \
+  torchrun --nproc_per_node 1 ./whisper/train.py \
   --max-duration 200 \
   --exp-dir whisper/exp_large_v2 \
   --model-name large-v2 \
