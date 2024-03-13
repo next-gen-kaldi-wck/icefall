@@ -187,7 +187,8 @@ def get_parser():
         "--ref-duration",
         type=float,
         default=600,
-        help="""Reference batch duration for purposes of adjusting batch counts for setting various schedules inside the model""",
+        help="""Reference batch duration for purposes of adjusting batch counts for 
+        setting various schedules inside the model""",
     )
 
     parser.add_argument(
