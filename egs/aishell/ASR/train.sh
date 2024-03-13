@@ -13,11 +13,18 @@ stop_stage=1
 
 if [ $stage -le 1 ] && [ $stop_stage -ge 1 ]; then
   log "Stage 1: fine-tuning on Aishell test set on whisper large-v2"
+#  torchrun --nproc_per_node 1 ./whisper/train.py \
+#    --max-duration 150 \
+#    --exp-dir whisper/exp_large_v2 \
+#    --model-name large-v2 \
+#    --manifest-dir data/fbank_whisper \
+#    --deepspeed \
+#    --deepspeed_config ./whisper/ds_config_zero1.json
+
   torchrun --nproc_per_node 1 ./whisper/train.py \
-  --max-duration 150 \
-  --exp-dir whisper/exp_large_v2 \
-  --model-name large-v2 \
-  --manifest-dir data/fbank_whisper \
-  --deepspeed \
-  --deepspeed_config ./whisper/ds_config_zero1.json
+    --max-duration 150 \
+    --exp-dir whisper/exp_large_v2 \
+    --model-name large-v2 \
+    --manifest-dir data/fbank_whisper \
+    --base-lr 1e-5
 fi
