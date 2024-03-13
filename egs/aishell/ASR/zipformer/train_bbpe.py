@@ -43,6 +43,10 @@ export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7"
 
 """
 
+try:
+    import ipdb
+except:
+    import pdb as ipdb
 
 import argparse
 import copy
@@ -924,6 +928,7 @@ def scan_pessimistic_batches_for_oom(
 
 def main():
     parser = get_parser()
+    # ipdb.set_trace()
     AishellAsrDataModule.add_arguments(parser)
     args = parser.parse_args()
     args.exp_dir = Path(args.exp_dir)

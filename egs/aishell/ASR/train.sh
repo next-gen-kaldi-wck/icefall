@@ -22,7 +22,7 @@ if [ $stage -le 1 ] && [ $stop_stage -ge 1 ]; then
 #    --deepspeed_config ./whisper/ds_config_zero1.json
 
   torchrun --nproc_per_node 1 ./whisper/train.py \
-    --max-duration 150 \
+    --max-duration 25 \
     --exp-dir whisper/exp_large_v2 \
     --model-name large-v2 \
     --manifest-dir data/fbank_whisper \

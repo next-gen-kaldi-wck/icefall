@@ -14,18 +14,26 @@ stop_stage=1
 
 if [ $stage -le 1 ] && [ $stop_stage -ge 1 ]; then
   log "Stage 1:  train Zipformer BBPE with aishell1"
-  ./zipformer/train_bbpe.py \
+  python3 ./zipformer/train_bbpe.py \
     --world-size 2 \
     --num-epochs 40 \
     --start-epoch 1 \
     --use-fp16 1 \
     --context-size 2 \
-    --enable-musan 0 \
     --exp-dir zipformer/exp_bbpe \
-    --max-duration 1000 \
-    --enable-musan 0 \
+    --max-duration 750 \
     --base-lr 0.045 \
     --lr-batches 7500 \
     --lr-epochs 10 \
-    --spec-aug-time-warp-factor 20
+#  torchrun --nproc_per_node 1 python -m ipdb ./zipformer/train_bbpe.py \
+#    --world-size 2 \
+#    --num-epochs 40 \
+#    --start-epoch 1 \
+#    --use-fp16 1 \
+#    --context-size 2 \
+#    --exp-dir zipformer/exp_bbpe \
+#    --max-duration 1000 \
+#    --base-lr 0.045 \
+#    --lr-batches 7500 \
+#    --lr-epochs 10
 fi
