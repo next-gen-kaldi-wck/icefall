@@ -3,6 +3,7 @@
 ### Aishell training results (Fine-tuning Pretrained Models)
 #### Whisper
 [./whisper](./whisper)
+
 ##### fine-tuning results on Aishell test set on whisper medium, large-v2, large-v3
 
 |                        | test (before fine-tuning) | test (after fine-tuning)  | comment                                 |
@@ -17,7 +18,7 @@ pip install -r whisper/requirements.txt
 
 ./prepare.sh --stage 30 --stop_stage 30
 
-#fine-tuning with deepspeed zero stage 1
+# fine-tuning with deepspeed zero stage 1
 torchrun --nproc-per-node 8 ./whisper/train.py \
   --max-duration 200 \
   --exp-dir whisper/exp_large_v2 \
