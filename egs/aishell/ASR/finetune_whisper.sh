@@ -33,9 +33,9 @@ if [ $stage -le 1 ] && [ $stop_stage -ge 1 ]; then
     # fine-tuning with ddp
     torchrun --nnodes=$num_nodes --nproc_per_node=$num_gpus \
         ./whisper/train.py \
-          --max-duration 50 \
+          --max-duration 40 \
           --num-epochs 10 \
-          --start-epoch 3 \
+          --start-epoch 6 \
           --exp-dir whisper/exp_large_v2 \
           --model-name large-v2
   else
